@@ -1,3 +1,0 @@
-export const FETCH_STUFF = 'FETCH_STUFF';
-export const RECEIVE_STUFF = 'RECEIVE_STUFF';
-export const SEARCH_BY_ITEM = 'SEARCH_BY_ITEM';

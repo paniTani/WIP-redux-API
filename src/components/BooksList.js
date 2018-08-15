@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
 import React from 'react';
-import { fetchBooks } from '../actions/stuffActions'
+import { fetchBooks } from '../actions/bookActions'
+import { Link } from 'react-router-dom'
 
-class stuffList extends React.Component {
+class BooksList extends React.Component {
     constructor(props) {
         super(props);
         this.state={
@@ -20,14 +20,12 @@ class stuffList extends React.Component {
 
         let searchedValue = this.state.value;
         this.props.fetchBooks(searchedValue);
+        // this.props.addBookName(searchedValue);
 
         this.setState({
             valueArr: [...this.state.valueArr, searchedValue],
-            value:''
+            value: ''
         });
-
-        // this.state.valueArr.push(searchedValue)
-
     }
 
     handleChange(e) {
@@ -38,8 +36,11 @@ class stuffList extends React.Component {
 
     renderData(item) {
         return <div className="book" key={item.id}>
-                    <img src={item.volumeInfo.imageLinks.thumbnail} alt=""/>
-                    <p>{item.volumeInfo.authors} - "{item.volumeInfo.title}"</p>
+                    <Link to={`/bookinfo/${item.id}`} item={item}>
+                        <img src={item.volumeInfo.imageLinks.thumbnail} alt=""/>
+                        {/*<Link to={}/>*/}
+                        <p>{item.volumeInfo.authors} - "{item.volumeInfo.title}"</p>
+                    </Link>
                 </div>
     }
 
@@ -54,9 +55,9 @@ class stuffList extends React.Component {
                     </form>
 
                     <div className="container-book" >
-                        {this.props.stuff && (
+                        {this.props.books && (
 
-                            this.props.stuff.map((item, index) => {
+                            this.props.books.map((item, index) => {
                                 return (
                                     this.renderData(item)
                                 );
@@ -69,19 +70,4 @@ class stuffList extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        stuff: state.stuff.items
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchBooks: (value) => { dispatch(fetchBooks(value)) }
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(stuffList);
+export default BooksList
