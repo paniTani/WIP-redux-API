@@ -1,13 +1,6 @@
 import request from 'superagent';
 
-// export const addBookName = (text) => {
-//     return {
-//         type: 'ADD_BOOK_NAME',
-//         bookName: text
-//     }
-// }
-
-export const fetchBooks = (value) => {
+export const getBooks = (value) => {
     return (dispatch) => {
         request
             .get('https://www.googleapis.com/books/v1/volumes')

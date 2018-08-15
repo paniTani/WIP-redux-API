@@ -6,34 +6,20 @@ class BookInfo extends Component {
         super(props)
     }
 
-    // renderData(item) {
-    //     return <div className="bookinfo-wrapper">
-    //                 <p >{this.props.pageData.id}</p>
-    //             </div>
-    //
-    // }
-
     render() {
+
         return(
             <div>
                 <div className="img-div">
 
                     <div className="bookinfo-wrapper">
-                        <p>book</p>
+                        <h1>{this.props.bookItemInfo.volumeInfo.title}</h1>
+                        <img src={this.props.bookItemInfo.volumeInfo.imageLinks.thumbnail} alt=""/>
+                        <p>Language: {this.props.bookItemInfo.volumeInfo.language}</p>
+                        <p>Pages: {this.props.bookItemInfo.volumeInfo.pageCount}</p>
                     </div>
-                    {/*{this.props.books && (*/}
-
-                        {/*this.props.books.map((item, index) => {*/}
-                            {/*return (*/}
-                                {/*this.renderData(item)*/}
-                            {/*);*/}
-                        {/*})*/}
-
-                    {/*)}*/}
-
-                    {/*<img src={this.props.} alt=""/>*/}
                 </div>
-                BookInfo</div>
+            </div>
         )
     }
 }

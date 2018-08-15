@@ -1,6 +1,5 @@
 const initialState = {
-    booksList: [],
-
+    booksList: []
 }
 
 export default function books(state, action) {
@@ -9,15 +8,11 @@ export default function books(state, action) {
     switch (action.type) {
         case 'RECEIVE_BOOKS':
 
-            newState = Object.assign({}, state, { booksList: action.booksList.items });
+            newState = Object.assign({}, state, { booksList: action.booksList.items, booksListId: action.booksList.items });
 
             console.log('RECEIVE_BOOKS Action')
+
             return newState;
-        // case 'ADD_BOOK_NAME':
-        //     newState = {...{}, ...state}
-        //     newState.bookNameArr = [...newState.bookNameArr, action.bookName]
-        //     console.log("newState.bookNameArr in reducer: " + newState.bookNameArr)
-        //     return  newState;
         default:
             return state;
     }

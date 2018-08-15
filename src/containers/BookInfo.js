@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 const mapStateToProps= (state, ownProps) => {
 
     return {
-        books: state.books.items
+        match: ownProps.match,
+        bookItemInfo: state.books.booksList.filter((book) => {
+
+            return book.id === ownProps.match.params.id
+        })[0]
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchBooks } from '../actions/bookActions'
+import { getBooks } from '../actions/bookActions'
 import { Link } from 'react-router-dom'
 
 class BooksList extends React.Component {
@@ -19,8 +19,7 @@ class BooksList extends React.Component {
         console.log(this.props);
 
         let searchedValue = this.state.value;
-        this.props.fetchBooks(searchedValue);
-        // this.props.addBookName(searchedValue);
+        this.props.getBooks(searchedValue);
 
         this.setState({
             valueArr: [...this.state.valueArr, searchedValue],
@@ -36,9 +35,8 @@ class BooksList extends React.Component {
 
     renderData(item) {
         return <div className="book" key={item.id}>
-                    <Link to={`/bookinfo/${item.id}`} item={item}>
+                    <Link to={`/bookinfo/` + item.id} item={item}>
                         <img src={item.volumeInfo.imageLinks.thumbnail} alt=""/>
-                        {/*<Link to={}/>*/}
                         <p>{item.volumeInfo.authors} - "{item.volumeInfo.title}"</p>
                     </Link>
                 </div>
@@ -48,7 +46,7 @@ class BooksList extends React.Component {
             return (
                 <div>
                     <form className="search" onSubmit={this.searchBook}>
-                        <label>Search word<br/>
+                        <label>Search word:<br/>
                             <input value={this.state.value} onChange={this.handleChange} type="text"/>
                         </label>
                         <input type="submit" ref="someName" value="Add ToDo"/>
