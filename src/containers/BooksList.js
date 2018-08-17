@@ -4,14 +4,15 @@ import { getBooks} from "../actions/bookActions";
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getBooks: (value) => {dispatch(getBooks(value))}
+        getBooks: (value, total, offset) => {dispatch(getBooks(value, total, offset))}
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         books: state.books.booksList,
-        bookId: state.books.booksListId,
+        booksListTotal: state.books.booksListTotal
+        // bookId: state.books.booksListId,
     }
 }
 

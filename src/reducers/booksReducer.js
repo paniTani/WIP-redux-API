@@ -1,5 +1,6 @@
 const initialState = {
-    booksList: []
+    booksList: [],
+    booksListTotal: []
 }
 
 export default function books(state, action) {
@@ -8,7 +9,7 @@ export default function books(state, action) {
     switch (action.type) {
         case 'RECEIVE_BOOKS':
 
-            newState = Object.assign({}, state, { booksList: action.booksList.items, booksListId: action.booksList.items });
+            newState = Object.assign({}, state, { booksList: action.booksList.items, booksListTotal: action.booksList });
 
             console.log('RECEIVE_BOOKS Action')
 

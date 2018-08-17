@@ -1,3 +1,7 @@
+li {
+  list-style-type: none;
+}
+
 .App {
   text-align: center;
 }
@@ -33,6 +37,21 @@
   display: flex;
   flex-wrap: wrap;
   flex: 0 0 20%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  background-color: #784DFC;
+  color: #FFFFFF;
 }
 
 @keyframes App-logo-spin {
