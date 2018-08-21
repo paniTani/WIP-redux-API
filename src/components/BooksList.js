@@ -9,17 +9,18 @@ const PaginationRow = styled.div`
     padding: 15px 0 20px;
 `
 
-const offset = 100;
+let offset = 0;
+let currentPage = 0;
 const marginPageDisplayed = 1;
-const pagesRangeDisplayed = 2;
+const pagesRangeDisplayed = 20;
 
 class BooksList extends React.Component {
     constructor(props) {
         super(props);
         this.state={
             value: '',
-            total: 10
-            // valueArr:[]
+            perPage: 10,
+            offset: 0
         }
 
         this.changePageHandler = this.changePageHandler.bind(this);
@@ -28,26 +29,30 @@ class BooksList extends React.Component {
     }
 
     changePageHandler(element) {
+        const selectedPage = element.selected;
+        const offset = selectedPage * this.state.perPage;
 
+        localStorage.setItem('offset', offset);
+        localStorage.setItem('selectedPage', selectedPage);
+        currentPage = +localStorage.getItem('selectedPage');
+
+        this.setState({offset: offset}, () => {
+            this.props.getBooks(localStorage.getItem('value'), localStorage.getItem("offset"));
+        })
     }
 
     searchBook(e) {
         e.preventDefault();
-        console.log(this.props);
-        // const total = this.props.booksListTotal.totalItems;
-        // const pagesCount = Math.ceil(total/10);
-        // const offset = Math.ceil(total/)
+        const searchedValue = this.state.value;
 
-        let searchedValue = this.state.value;
-        this.props.getBooks(searchedValue, this.state.total, offset);
+        localStorage.setItem('value', searchedValue);
+        localStorage.setItem('offset', '0');
+        currentPage = 0;
 
+        this.props.getBooks(searchedValue, offset);
         this.setState({
-            // valueArr: [...this.state.valueArr, searchedValue],
             value: ''
-            // total: total
         });
-
-        console.log(this.props.books);
     }
 
     handleChange(e) {
@@ -61,16 +66,14 @@ class BooksList extends React.Component {
                     <Link to={`/bookinfo/` + item.id} item={item}>
                         <img src={item.volumeInfo.imageLinks.thumbnail} alt=""/>
                         <p>{item.volumeInfo.authors} - "{item.volumeInfo.title}"</p>
-                        {/*<p>{this.props.booksListTotal.totalItems}</p>*/}
                     </Link>
                 </div>
     }
 
     render() {
-        // console.log(this.props.totalItems);
-        const pagesCount = 4;
-        // const offset = this.state.maxResults/pagesCount;
-        // const total = this.props.booksListTotal.totalItems;
+        const total = this.props.booksListTotal;
+        const pagesCount = Math.ceil(total/this.state.perPage);
+
             return (
                 <div>
                     <form className="search" onSubmit={this.searchBook}>
@@ -79,22 +82,22 @@ class BooksList extends React.Component {
                         </label>
                         <input type="submit" ref="someName" value="Search"/>
                     </form>
+                    <p>total: {total}</p>
 
                     <div className="container-book" >
-                        {this.props.books && (
+                        {this.props.books && this.props.books.length !== 0 ? (
 
                             this.props.books.map((item, index) => {
                                 return (
                                     this.renderData(item)
                                 );
                             })
-
-                        )}
+                        ) : <div>No results found</div>}
                     </div>
 
                     {this.props.books && this.props.books.length !== 0 && (
                         <PaginationRow>
-                            <ReactPaginate pageCount={pagesCount} marginPagesDisplayed={marginPageDisplayed} pageRangeDisplayed={pagesRangeDisplayed} onPageChange={(element) => this.changePageHandler(element)}  activeClassName="active" containerClassName="pagination"/>
+                            <ReactPaginate pageCount={pagesCount} marginPagesDisplayed={marginPageDisplayed} forcePage={currentPage} pageRangeDisplayed={pagesRangeDisplayed} previousLabel="" nextLabel="" onPageChange={(element) => this.changePageHandler(element)}  activeClassName="active" containerClassName="pagination"/>
                         </PaginationRow>
                     )}
 

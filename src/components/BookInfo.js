@@ -7,11 +7,9 @@ class BookInfo extends Component {
     }
 
     render() {
-
         return(
             <div>
                 <div className="img-div">
-
                     <div className="bookinfo-wrapper">
                         <h1>{this.props.bookItemInfo.volumeInfo.title}</h1>
                         <img src={this.props.bookItemInfo.volumeInfo.imageLinks.thumbnail} alt=""/>
